@@ -57,6 +57,16 @@ class MainActivity : AppCompatActivity() {
             else 0
 
         val pendingIntent : PendingIntent = PendingIntent.getActivity(this, 0, intent, flag)
+        val buttonIntent = Intent(this, SecondActivity::class.java)
+        buttonIntent.putExtra("btnNotification", "From notification button")
+        val buttonPendingIntent : PendingIntent = PendingIntent.getActivity(this, 0, buttonIntent, flag)
+
+        val action : NotificationCompat.Action = NotificationCompat.Action.Builder(
+            R.drawable.ic_notification,
+            "Button",
+            buttonPendingIntent
+        ).build()
+
         notification = NotificationCompat.Builder(this, idChannel)
             .setSmallIcon(R.drawable.ic_notification)
             .setContentTitle("My Notification")
@@ -69,6 +79,7 @@ class MainActivity : AppCompatActivity() {
             .setContentIntent(pendingIntent)
             .setAutoCancel(true)
             .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+            .addAction(action)
     }
 
     @SuppressLint("MissingPermission")
